@@ -1,0 +1,21 @@
+<p *ngIf="!patterns"><em>Loading...</em></p>
+<div *ngIf="patterns">
+  <select id="tuningSelect" (change)="update()">
+    <option [value]="tuning.strings" *ngFor="let tuning of tunings">
+      {{tuning.name}}
+    </option>
+  </select>
+  <select id="patternSelect" (change)="update()">
+    <option [value]="pattern.pattern" *ngFor="let pattern of patterns">
+      {{pattern.name}}
+    </option>
+  </select>
+  <select id="noteSelect" (change)="update()">
+    <option [value]="note.name" *ngFor="let note of notes">
+      {{note.name}}
+    </option>
+  </select>
+</div>
+<div *ngIf="data">
+  <img src="data:image/gif;base64,{{data}}" />
+</div>

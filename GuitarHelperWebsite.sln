@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitarHelperWebsite", "GuitarHelperWebsite\GuitarHelperWebsite.csproj", "{295E02CC-0F19-46F6-9065-0E31D55953FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitarHelperWebsite.Tests", "GuitarHelperWebsite.Tests\GuitarHelperWebsite.Tests.csproj", "{A9A3BC72-8548-4ADE-B9D1-3E691DAA6F81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{295E02CC-0F19-46F6-9065-0E31D55953FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295E02CC-0F19-46F6-9065-0E31D55953FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295E02CC-0F19-46F6-9065-0E31D55953FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295E02CC-0F19-46F6-9065-0E31D55953FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9A3BC72-8548-4ADE-B9D1-3E691DAA6F81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9A3BC72-8548-4ADE-B9D1-3E691DAA6F81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9A3BC72-8548-4ADE-B9D1-3E691DAA6F81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A3BC72-8548-4ADE-B9D1-3E691DAA6F81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FC029B5-418D-4FFC-9DF4-E8626C230A37}
+	EndGlobalSection
+EndGlobal
