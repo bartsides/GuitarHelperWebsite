@@ -6,20 +6,23 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
+import { ScalesComponent } from './scales/scales.component';
+import { ScaleFinderComponent } from './scaleFinder/scaleFinder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent
+    ScalesComponent,
+    ScaleFinderComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' }
+      { path: '', component: ScalesComponent, pathMatch: 'full' },
+      { path: 'finder', component: ScaleFinderComponent }
     ])
   ],
   providers: [],

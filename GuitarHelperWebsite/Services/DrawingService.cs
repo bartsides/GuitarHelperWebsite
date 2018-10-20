@@ -33,6 +33,11 @@ namespace GuitarHelperWebsite.Services
         private Brush clickHighlightBrush = Brushes.BurlyWood;
         private Font f = new Font("Helvetica", 10);
         
+        public string GetDrawing(string tuning)
+        {
+            return GetDrawing(tuningService.GetTuning(tuning), new List<Note>());
+        }
+
         public string GetDrawing(string tuning, string pattern, string note)
         {
             return GetDrawing(tuningService.GetTuning(tuning), scaleService.GetNotes(pattern, note));

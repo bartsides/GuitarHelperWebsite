@@ -1,0 +1,11 @@
+<p *ngIf="!tunings"><em>Loading...</em></p>
+<div *ngIf="tunings">
+  <select id="tuningSelect" (change)="updateTuning()">
+    <option [value]="tuning.strings" *ngFor="let tuning of tunings">
+      {{tuning.name}}
+    </option>
+  </select>
+  <div *ngIf="data">
+    <img src="data:image/gif;base64,{{data}}" (click)="this.click($event)" />
+  </div>
+</div>

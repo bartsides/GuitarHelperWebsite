@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
+  templateUrl: './scales.component.html',
 })
-export class HomeComponent {
+export class ScalesComponent {
   private http: HttpClient;
   private baseUrl: string;
 
@@ -32,13 +32,12 @@ export class HomeComponent {
   }
 
   update() {
-    let tuning = (<HTMLSelectElement>document.getElementById("tuningSelect")).value;
-    let pattern = (<HTMLSelectElement>document.getElementById("patternSelect")).value;
-    let note = (<HTMLSelectElement>document.getElementById("noteSelect")).value;
+    let tuning = (<HTMLSelectElement> document.getElementById("tuningSelect")).value;
+    let pattern = (<HTMLSelectElement> document.getElementById("patternSelect")).value;
+    let note = (<HTMLSelectElement> document.getElementById("noteSelect")).value;
 
     this.http.get<DrawingResult>(`${this.baseUrl}api/Drawing/${tuning}/${pattern}/${note}`).subscribe(result => {
       this.data = result.data;
-      console.log('result: ' + result.data);
     }, error => console.error(error));
   }
 }

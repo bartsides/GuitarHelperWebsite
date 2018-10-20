@@ -11,7 +11,12 @@
       <ul class='nav navbar-nav inline'>
         <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
           <a [routerLink]='["/"]' class="nav-link" (click)='collapse()'>
-            <span class='fas fa-home'></span> Home
+            <span class='fas fa-home'></span> Scales
+          </a>
+        </li>
+        <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <a [routerLink]='["/finder"]' class="nav-link" (click)='collapse()'>
+            <span class='fas'></span> Scale Finder
           </a>
         </li>
       </ul>

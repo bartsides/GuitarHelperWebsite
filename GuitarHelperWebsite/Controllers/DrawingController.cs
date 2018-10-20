@@ -10,6 +10,12 @@ namespace GuitarHelperWebsite.Controllers
     {
         private DrawingService _drawingService = new DrawingService();
 
+        [Route("{tuning}")]
+        public DrawingResponse Get(string tuning)
+        {
+            return new DrawingResponse(_drawingService.GetDrawing(tuning));
+        }
+
         [Route("{tuning}/{pattern}/{note}")]
         public DrawingResponse Get(string tuning, string pattern, string note)
         {
