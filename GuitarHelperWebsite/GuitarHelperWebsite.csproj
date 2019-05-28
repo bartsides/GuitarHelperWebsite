@@ -28,10 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\nav-menu\nav-menu.component.spec.ts" />
     <None Remove="ClientApp\src\app\scaleFinder\scaleFinder.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\nav-menu\nav-menu.component.spec.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\scaleFinder\scaleFinder.component.ts" />
   </ItemGroup>
 
