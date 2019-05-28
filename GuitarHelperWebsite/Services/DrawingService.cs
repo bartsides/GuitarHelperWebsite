@@ -14,17 +14,25 @@ namespace GuitarHelperWebsite.Services
         private ScaleService scaleService = new ScaleService();
         private TuningService tuningService = new TuningService();
 
-        private int width = 1000;
-        private int height = 300;
+        public int width = 1000;
+        public int height = 300;
 
         // Coordinates
         private float frets = 24;
         private float nutX = 44;
-        private float neckLength;
         private float neckTop = 30;
         private float neckBottom = 230;
         private float fretNumberingY;
-        private float openStringX;
+
+        private float openStringX
+        {
+            get { return nutX - 22; }
+        }
+
+        private float neckLength
+        {
+            get { return width - nutX * 2; }
+        }
 
         // Pens, Brushes, Fonts
         private Pen p = new Pen(Color.Black);
@@ -32,7 +40,7 @@ namespace GuitarHelperWebsite.Services
         private Brush highlightBrush = Brushes.Orange;
         private Brush clickHighlightBrush = Brushes.BurlyWood;
         private Font f = new Font("Helvetica", 10);
-        
+                
         public string GetDrawing(string tuning)
         {
             return GetDrawing(tuningService.GetTuning(tuning), new List<Note>());
@@ -49,10 +57,8 @@ namespace GuitarHelperWebsite.Services
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 g.FillRectangle(Brushes.White, new Rectangle(new Point(0,0), new Size(width, height)));
-                neckLength = width - nutX * 2;
-
+                
                 fretNumberingY = neckTop - 20;
-                openStringX = nutX - 22;
 
                 float stringDistance = 0;
                 if (tuning.Notes != null)
@@ -143,6 +149,47 @@ namespace GuitarHelperWebsite.Services
         private float FretLocation(int fret)
         {
             return neckLength - (neckLength / Convert.ToSingle(Math.Pow(2, fret / 12f)));
+        }
+
+        public Point? GetFretClicked(string tuning, int x, int y)
+        {
+            return GetFretClicked(tuningService.GetTuning(tuning), new Point(x, y));
+        }
+
+        public Point? GetFretClicked(Tuning tuning, Point point)
+        {
+            double x = -1;
+            double y = -1;
+
+            if (point.X >= openStringX && point.X <= nutX)
+                x = 0;
+            else
+            {
+                x = 1 + 12 * Math.Log(
+                Math.Pow(2, ((int)frets - 1) / 12f) * neckLength /
+                ((Math.Pow(2, ((int)frets - 1) / 12f) - 1) * nutX +
+                (1 - (Math.Pow(2, ((int)frets - 1) / 12f))) * point.X + (Math.Pow(2, ((int)frets - 1) / 12f)) * neckLength)
+                ) / Math.Log(2);
+            }
+
+            if (x < 0)
+                return null;
+
+            List<Note> strings = noteService.GetNotes(tuning.Strings);
+            float stringDistance = (neckBottom - neckTop) / Convert.ToSingle(strings.Count);
+            for (int i = 0; i < strings.Count; i++)
+            {
+                if (point.Y >= neckTop + stringDistance * i && point.Y <= neckTop + stringDistance * (i + 1))
+                {
+                    y = i;
+                    break;
+                }
+            }
+
+            if (y < 0)
+                return null;
+
+            return new Point((int) x, (int) y);
         }
     }
 }

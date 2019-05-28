@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-scales',
   templateUrl: './scales.component.html',
 })
 export class ScalesComponent {
@@ -17,24 +18,31 @@ export class ScalesComponent {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.http = http;
     this.baseUrl = baseUrl;
+  }
 
-    http.get<Pattern[]>(baseUrl + 'api/Pattern').subscribe(result => {
-      this.patterns = result;
-    }, error => console.error(error));
+  ngOnInit() {
+    forkJoin(
+      this.http.get<Pattern[]>(this.baseUrl + 'api/Pattern'),
+      this.http.get<Tuning[]>(this.baseUrl + 'api/Tuning'),
+      this.http.get<Note[]>(this.baseUrl + 'api/Note')
+    ).subscribe(([patternData, tuningData, noteData]) => {
+      this.patterns = patternData;
+      this.tunings = tuningData;
+      this.notes = noteData;
 
-    http.get<Tuning[]>(baseUrl + 'api/Tuning').subscribe(result => {
-      this.tunings = result;
-    }, error => console.error(error));
-
-    http.get<Note[]>(baseUrl + 'api/Note').subscribe(result => {
-      this.notes = result;
+      this.update();
     }, error => console.error(error));
   }
 
   update() {
-    let tuning = (<HTMLSelectElement> document.getElementById("tuningSelect")).value;
-    let pattern = (<HTMLSelectElement> document.getElementById("patternSelect")).value;
-    let note = (<HTMLSelectElement> document.getElementById("noteSelect")).value;
+    let tuningSelect = <HTMLSelectElement>document.getElementById("tuningSelect");
+    let tuning = tuningSelect ? tuningSelect.value : this.tunings[0].strings;
+
+    let patternSelect = <HTMLSelectElement>document.getElementById("patternSelect");
+    let pattern = patternSelect ? patternSelect.value : this.patterns[0].pattern;
+
+    let noteSelect = <HTMLSelectElement>document.getElementById("noteSelect");
+    let note = noteSelect ? noteSelect.value : this.notes[0].name;
 
     this.http.get<DrawingResult>(`${this.baseUrl}api/Drawing/${tuning}/${pattern}/${note}`).subscribe(result => {
       this.data = result.data;
@@ -42,15 +50,8 @@ export class ScalesComponent {
   }
 }
 
-interface Tuning {
-  name: string;
-  strings: Note[];
-  notes;
-}
-
-interface Pattern {
-  name: string;
-  pattern: string;
+interface DrawingResult {
+  data: string;
 }
 
 interface Note {
@@ -58,6 +59,13 @@ interface Note {
   value: number;
 }
 
-interface DrawingResult {
-  data: string;
+interface Pattern {
+  name: string;
+  pattern: string;
+}
+
+interface Tuning {
+  name: string;
+  strings: Note[];
+  notes;
 }
